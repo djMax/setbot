@@ -1,0 +1,27 @@
+{
+  "name": "setbot",
+  "version": "1.0.0",
+  "description": "An OpenCV based set playing robot",
+  "main": "build/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "set",
+    "opencv",
+    "games"
+  ],
+  "author": "Max Metral <max@pyralis.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.4.5",
+    "babel-preset-gasbuddy": "^1",
+    "eslint": "^3.1.0",
+    "eslint-config-gasbuddy": "^1",
+    "tap": "^8.0.0"
+  },
+  "dependencies": {
+    "bluebird": "^3.2.1",
+    "opencv": "^6.0.0"
+  }
+}
