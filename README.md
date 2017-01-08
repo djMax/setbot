@@ -34,5 +34,3 @@ different lighting, etc.
 So what should really happen, IMHO, is a single shape from a card
 should be extracted and fed to a trained classifier. Maybe I'll do that
 next but if someone has a better idea, please say so in the Issues!
-
-Also my card positional sort is not working but I'm done for today.

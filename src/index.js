@@ -168,19 +168,15 @@ async function runSet() {
     });
     // show(cardWindow, thisShape, 'Showing outlines', 2500);
     // show(cardWindow, mask, 'Showing mask', 2500);
-    show(cardWindow, masked, 'Showing shapes only', 50000);
+    show(cardWindow, masked, 'Showing shapes only', 500);
   });
 
   cardDetails.sort((c1, c2) => {
-    if (Math.abs(c2.y - c1.y) < 50) {
-      return c2.x - c1.x;
+    if (Math.abs(c2.corner.y - c1.corner.y) < 50) {
+      return c1.corner.x - c2.corner.x;
     }
-    if (c2.y > c1.y) {
-      return -1;
-    }
-    return 1;
+    return c2.corner.y - c1.corner.y;
   });
-  // console.log(cardDetails);
 
   // thresh.save('./tests/out.jpg');
   // show(originalWindow, thresh, 'Contours');
