@@ -54,6 +54,7 @@ export function sortContoursByArea(contours) {
     sorter.push({
       ix: c,
       area: contours.area(c),
+      hierarchy: contours.hierarchy(c),
     });
   }
   return sorter.sort((a, b) => (b.area - a.area));

@@ -17,7 +17,7 @@ export function show(window, image, msg, block) {
 
 async function runSet() {
   const cardDetails = [];
-  const image = await Promise.promisify(cv.readImage)('./tests/sample.jpg');
+  const image = await Promise.promisify(cv.readImage)(process.argv[2] || './tests/sample.jpg');
 
   const original = image.clone();
 
@@ -27,14 +27,22 @@ async function runSet() {
   image.gaussianBlur([1, 1]);
   // show(originalWindow, image, 'Grayscale and blur', 5000);
 
-  const thresh = image.threshold(120, 250, 'Binary');
-  //show(originalWindow, thresh, 'Applied threshold', 5000);
+  const thresh = image.threshold(180, 250, 'Binary');
+  show(originalWindow, thresh, 'Applied threshold', 5000);
 
   //show(originalWindow, image, 'Original image', 5000);
 
-  const contours = thresh.findContours();
+  const contours = thresh.findContours(cv.Constants.RETR_TREE);
 
   const cards = util.sortContoursByArea(contours).slice(0, 12);
+  /*
+  for (const c of util.sortContoursByArea(contours).slice(0, 30)) {
+    const fresh = original.clone();
+    fresh.drawContour(contours, c.ix, [255, 255, 255], -1, 8);
+    show(originalWindow, fresh, c, 20000);
+  }
+  */
+
   cards.map(c => thresh.drawContour(contours, c.ix, [255, 255, 255], 4, 8, 0, [0, 0]));
 
   cards.map((c, ix) => {
@@ -158,17 +166,21 @@ async function runSet() {
       color = 'Purple';
     }
 
+    masked.convertGrayscale();
+    console.log(masked.mean()[0], masked.meanStdDev().stddev.getData());
     console.log(`That card is ${shapeCount} ${fill} ${color} ${shapeType} ${white}`);
-    cardDetails.push({
-      color,
-      fill,
-      shape: shapeType,
-      count: shapeCount,
-      corner: approxRect[0],
-    });
+    if (shapeCount > 0 && shapeCount < 3) {
+      cardDetails.push({
+        color,
+        fill,
+        shape: shapeType,
+        count: shapeCount,
+        corner: approxRect[0],
+      });
+    }
     // show(cardWindow, thisShape, 'Showing outlines', 2500);
     // show(cardWindow, mask, 'Showing mask', 2500);
-    show(cardWindow, masked, 'Showing shapes only', 500);
+    show(cardWindow, masked, 'Showing shapes only ', 2500);
   });
 
   cardDetails.sort((c1, c2) => {
