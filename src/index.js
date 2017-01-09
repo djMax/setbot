@@ -166,10 +166,13 @@ async function runSet() {
       color = 'Purple';
     }
 
+/* Idea: maybe compare the non shape card bg mean to the shape mean
     masked.convertGrayscale();
     console.log(masked.mean()[0], masked.meanStdDev().stddev.getData());
+    */
+
     console.log(`That card is ${shapeCount} ${fill} ${color} ${shapeType} ${white}`);
-    if (shapeCount > 0 && shapeCount < 3) {
+    if (shapeCount >= 1 && shapeCount <= 3) {
       cardDetails.push({
         color,
         fill,
